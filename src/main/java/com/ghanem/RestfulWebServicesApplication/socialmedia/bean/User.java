@@ -1,5 +1,6 @@
 package com.ghanem.RestfulWebServicesApplication.socialmedia.bean;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
@@ -10,6 +11,7 @@ public class User {
     private Integer id;
 
     @Size(min = 3)
+    @JsonProperty("user_name")
     private String name;
     @Past
     private LocalDate birthDate;
