@@ -59,6 +59,13 @@
 			<artifactId>spring-data-rest-hal-explorer</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
 <!--		&lt;!&ndash; http://localhost:8080/swagger-ui/index.html#/ show all the APIs in the project  &ndash;&gt;-->
 <!--		<dependency>-->
 <!--			<groupId>org.springdoc</groupId>-->
