@@ -1,8 +1,10 @@
 package com.ghanem.RestfulWebServicesApplication.socialmedia.controller;
 
+import com.ghanem.RestfulWebServicesApplication.socialmedia.bean.Post;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.bean.User;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.dao.UserDaoService;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.exception.UserNotFoundException;
+import com.ghanem.RestfulWebServicesApplication.socialmedia.repo.PostRepository;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.repo.UserRepo;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,11 @@ public class UserJPAResource {
 
     @Autowired
     private UserRepo userRepo;
+    private PostRepository postRepository;
 
-
-    public UserJPAResource(UserRepo userRepo) {
+    public UserJPAResource(UserRepo userRepo, PostRepository postRepository) {
         this.userRepo = userRepo;
+        this.postRepository = postRepository;
     }
 
     @GetMapping(path = "/users")
@@ -67,6 +70,16 @@ public class UserJPAResource {
     @DeleteMapping(path = "/user/{id}")
     public void DeleteOneUser(@PathVariable Long id){
         userRepo.deleteById(id);
+    }
+
+    @GetMapping("/users/{id}/posts") ///api/v1/jpa/users/{id}/posts
+    public List<Post> retrievePostsForUser(@PathVariable Long id) {
+        Optional<User> user = userRepo.findById(id);
+
+        if(user.isEmpty())
+            throw new UserNotFoundException("id:"+id);
+
+        return user.get().getPosts();
     }
 
 }
