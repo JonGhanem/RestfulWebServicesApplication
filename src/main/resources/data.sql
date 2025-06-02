@@ -8,7 +8,8 @@ values(10002, current_date(),'Mohamed');
 insert into user_details(id,birth_date,name)
 values(10003, current_date(),'Youssef');
 
-
+--------------------------------
+--posts
 
 insert into post(id,description,user_id)
 values(20001,'Yahya want to learn AWS', 10001);

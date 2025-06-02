@@ -2,6 +2,7 @@ package com.ghanem.RestfulWebServicesApplication.socialmedia.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -16,6 +17,7 @@ public class Post {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Size(min = 10)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -2,7 +2,6 @@ package com.ghanem.RestfulWebServicesApplication.socialmedia.controller;
 
 import com.ghanem.RestfulWebServicesApplication.socialmedia.bean.Post;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.bean.User;
-import com.ghanem.RestfulWebServicesApplication.socialmedia.dao.UserDaoService;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.exception.UserNotFoundException;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.repo.PostRepository;
 import com.ghanem.RestfulWebServicesApplication.socialmedia.repo.UserRepo;
@@ -81,5 +80,25 @@ public class UserJPAResource {
 
         return user.get().getPosts();
     }
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Object> createPostForUser(@PathVariable Long id, @Valid @RequestBody Post post) {
+        Optional<User> user = userRepo.findById(id);
+
+        if(user.isEmpty())
+            throw new UserNotFoundException("id:"+id);
+        post.setUser(user.get());
+
+
+        Post savedPost = postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedPost.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
 
 }

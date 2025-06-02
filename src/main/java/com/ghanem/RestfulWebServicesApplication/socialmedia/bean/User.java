@@ -18,6 +18,7 @@ import java.util.List;
 @ToString
 public class User {
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     private Long id;
 
